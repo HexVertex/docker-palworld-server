@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  palworld-server:
+    restart: always
+    build:
+      context: .
+    environment:
+      - MAX_VSIZE=14000000
+      # - IS_COMMUNITY=false
+    image: palworld-server:latest
+    container_name: palworld-server
+    volumes:
+      - ./data:/data
+    ports:
+      - "27015:27015/udp"
+      - "8211:8211/udp"
+#  autoheal:
+#    restart: always
+#    image: willfarrell/autoheal
+#    environment:
+#      - AUTOHEAL_CONTAINER_LABEL=all
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
