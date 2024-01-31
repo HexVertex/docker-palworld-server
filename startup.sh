@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 INSTALLED_BUILD=$(cat /data/steamapps/appmanifest_${APP_ID}.acf | grep -Po "^\s*\"buildid\"\s*\K\"(.*?)\"" | tr -d '"')
-LATEST_BUILD=$(curl -X GET "https://api.steamcmd.net/v1/info/${APP_ID:-2394010}" | grep -Po "^.*branches.*public\": {\"buildid\":\s\K\"[0-9]*\"" | tr -d '"')
+LATEST_BUILD=$(curl -s -X GET "https://api.steamcmd.net/v1/info/${APP_ID:-2394010}" | grep -Po "^.*branches.*public\": {\"buildid\":\s\K\"[0-9]*\"" | tr -d '"')
 
 echo "INSTALLED_BUILD=$INSTALLED_BUILD"
 echo "LATEST_BUILD=$LATEST_BUILD"

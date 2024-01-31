@@ -6,7 +6,7 @@ services:
       context: .
     environment:
       - MAX_VSIZE=14000000
-      # - IS_COMMUNITY=false
+      - IS_COMMUNITY=true
     image: palworld-server:latest
     container_name: palworld-server
     volumes:
@@ -21,3 +21,24 @@ services:
 #      - AUTOHEAL_CONTAINER_LABEL=all
 #    volumes:
 #      - /var/run/docker.sock:/var/run/docker.sock
+  checker:
+    restart: always
+    build: 
+      dockerfile: checker.Dockerfile
+      context: ./checker
+    image: palworld-update-health-checker:latest
+    container_name: palworld-server-checker
+    environment:
+      ADMIN_PASS: /run/secrets/secret_file
+      RCON_PORT: 25575
+      SERVER: palworld-server
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data:/data
+    secrets:
+      - secret_file
+      
+secrets:
+  secret_file:
+    file: ./.secret
+
